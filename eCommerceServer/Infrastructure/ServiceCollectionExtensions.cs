@@ -2,6 +2,7 @@
 {
     using eCommerceServer.Data;
     using eCommerceServer.Data.Models;
+    using eCommerceServer.Features.Identity;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
@@ -49,6 +50,14 @@
                         IssuerSigningKey = new SymmetricSecurityKey(key)
                     };
                 });
+
+            return services;
+        }
+
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        {
+            services.
+                AddTransient<IIdentityService, IdentityService>();
 
             return services;
         }

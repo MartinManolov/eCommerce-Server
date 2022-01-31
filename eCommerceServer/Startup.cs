@@ -25,6 +25,8 @@ namespace eCommerceServer
                     .UseSqlServer(Configuration.GetConnectionString("DefaultConnection")))
                 .AddIdentity()
                 .AddJwtAuthentication(services.GetApplicationSettings(this.Configuration))
+                .AddApplicationServices()
+                .AddSwaggerGen()
                 .AddControllers();
                
             services.AddDatabaseDeveloperPageExceptionFilter();
@@ -37,6 +39,8 @@ namespace eCommerceServer
             {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
             else
             {
@@ -45,6 +49,11 @@ namespace eCommerceServer
             }
 
             app
+                .UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                    options.RoutePrefix = string.Empty;
+                })
                 .UseRouting()
                 .UseCors(options => options
                    .AllowAnyOrigin()
