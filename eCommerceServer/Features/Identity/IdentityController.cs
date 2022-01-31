@@ -1,37 +1,32 @@
-﻿namespace eCommerceServer.Controllers
+﻿namespace eCommerceServer.Features.Identity
 {
     using eCommerceServer.Data.Models;
-    using eCommerceServer.Models.Users;
+    using eCommerceServer.Features;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Options;
-    using Microsoft.IdentityModel.Tokens;
     using System;
-    using System.Collections.Generic;
-    using System.IdentityModel.Tokens.Jwt;
-    using System.Security.Claims;
-    using System.Text;
     using System.Threading.Tasks;
 
     public class IdentityController : ApiController
     {
         private readonly AppSettings appSettings;
+        private readonly IIdentityService identityService;
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly RoleManager<IdentityRole> roleManager;
-        private readonly IConfiguration _configuration;
-        public IdentityController(IOptions<AppSettings> appSettings, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public IdentityController(
+            IIdentityService identityService,
+            IOptions<AppSettings> appSettings,
+            UserManager<ApplicationUser> userManager)
         {
             this.appSettings = appSettings.Value;
+            this.identityService = identityService;
             this.userManager = userManager;
-            this.roleManager = roleManager;
-            _configuration = configuration;
         }
 
         [HttpPost]
         [Route("register")]
-        public async Task<ActionResult> Register([FromBody] UserRegisterModel model)
+        public async Task<ActionResult> Register([FromBody] RegisterRequestModel model)
         {
             var userExists = await userManager.FindByNameAsync(model.UserName);
             if (userExists != null)
@@ -52,7 +47,7 @@
 
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult<string>> Login([FromBody] UserLoginModel model)
+        public async Task<ActionResult<object>> Login([FromBody] LoginRequestModel model)
         {
             var user = await this.userManager.FindByNameAsync(model.UserName);
             if(user == null)
@@ -67,16 +62,15 @@
                 return Unauthorized();
             }
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(this.appSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            var encryptedToken = this.identityService.GenerateJwtToken(
+                user.Id,
+                user.UserName,
+                this.appSettings.Secret);
+
+            return new LoginResponseModel
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                Token = encryptedToken
             };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
         }
     }
 }

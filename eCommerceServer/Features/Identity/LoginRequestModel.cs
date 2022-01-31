@@ -1,8 +1,8 @@
-﻿namespace eCommerceServer.Models.Users
+﻿namespace eCommerceServer.Features.Identity
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class UserLoginModel
+    public class LoginRequestModel
     {
         [Required]
         public string UserName { get; set; }
