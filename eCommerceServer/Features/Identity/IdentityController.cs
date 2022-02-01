@@ -40,7 +40,10 @@
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.UserName
             };
+
             var result = await userManager.CreateAsync(user, model.Password);
+
+            await userManager.AddToRoleAsync(user, GlobalConstants.UserRoleName);
 
             return Ok(result);
         }

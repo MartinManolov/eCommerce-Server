@@ -4,7 +4,7 @@
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
-    public class eCommerceDbContext : IdentityDbContext<ApplicationUser>
+    public class eCommerceDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public eCommerceDbContext(DbContextOptions<eCommerceDbContext> options)
             : base(options)

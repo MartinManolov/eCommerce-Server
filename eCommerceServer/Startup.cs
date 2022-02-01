@@ -1,7 +1,9 @@
 namespace eCommerceServer
 {
     using eCommerceServer.Data;
+    using eCommerceServer.Data.Seeding;
     using eCommerceServer.Infrastructure;
+    using eCommerceServer.Middlewares;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.EntityFrameworkCore;
@@ -35,6 +37,13 @@ namespace eCommerceServer
         
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                var dbContext = serviceScope.ServiceProvider.GetRequiredService<eCommerceDbContext>();
+                dbContext.Database.Migrate();
+                new eCommerceDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -49,18 +58,19 @@ namespace eCommerceServer
             }
 
             app
-                .UseSwaggerUI(options =>
-                {
-                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-                    options.RoutePrefix = string.Empty;
-                })
                 .UseRouting()
                 .UseCors(options => options
                    .AllowAnyOrigin()
                    .AllowAnyHeader()
                    .AllowAnyMethod())
+                .UseSetAdminMiddleware()
                 .UseAuthentication()
                 .UseAuthorization()
+                .UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                    options.RoutePrefix = string.Empty;
+                })
                 .UseEndpoints(endpoints =>
                 {
                     endpoints.MapControllers();

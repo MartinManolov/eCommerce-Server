@@ -2,6 +2,7 @@
 {
     using eCommerceServer.Data;
     using eCommerceServer.Data.Models;
+    using eCommerceServer.Data.Repositories;
     using eCommerceServer.Features.Identity;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Identity;
@@ -14,7 +15,7 @@
         public static IServiceCollection AddIdentity (this IServiceCollection services)
         {
             services
-                .AddIdentity<ApplicationUser, IdentityRole>(options =>
+                .AddIdentity<ApplicationUser, ApplicationRole>(options =>
                 {
                     options.Password.RequireDigit = false;
                     options.Password.RequiredLength = 6;
@@ -56,8 +57,10 @@
 
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            services.
-                AddTransient<IIdentityService, IdentityService>();
+            services
+                .AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>))
+                .AddScoped(typeof(IRepository<>), typeof(EfRepository<>))
+                .AddTransient<IIdentityService, IdentityService>();
 
             return services;
         }
