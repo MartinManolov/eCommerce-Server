@@ -3,8 +3,10 @@
     using eCommerceServer.Data;
     using eCommerceServer.Data.Models;
     using eCommerceServer.Data.Repositories;
+    using eCommerceServer.Features.Categories;
     using eCommerceServer.Features.Identity;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
@@ -22,7 +24,6 @@
                     options.Password.RequireLowercase = false;
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = false;
-
                 })
                 .AddEntityFrameworkStores<eCommerceDbContext>();
 
@@ -58,9 +59,11 @@
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services
+                .AddHttpContextAccessor()
                 .AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>))
                 .AddScoped(typeof(IRepository<>), typeof(EfRepository<>))
-                .AddTransient<IIdentityService, IdentityService>();
+                .AddTransient<IIdentityService, IdentityService>()
+                .AddTransient<ICategoryService, CategoryService>();
 
             return services;
         }
