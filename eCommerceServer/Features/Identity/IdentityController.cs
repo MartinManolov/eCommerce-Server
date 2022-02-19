@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public class IdentityController : ApiController
@@ -38,7 +39,7 @@
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.UserName
+                UserName = model.UserName,
             };
 
             var result = await userManager.CreateAsync(user, model.Password);
@@ -65,10 +66,7 @@
                 return Unauthorized();
             }
 
-            var encryptedToken = this.identityService.GenerateJwtToken(
-                user.Id,
-                user.UserName,
-                this.appSettings.Secret);
+            var encryptedToken = await this.identityService.GenerateJwtToken(user);
 
             return new LoginResponseModel
             {

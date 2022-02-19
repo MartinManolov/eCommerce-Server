@@ -38,6 +38,7 @@
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(user, GlobalConstants.AdministratorRoleName);
+                    await userManager.AddToRoleAsync(user, GlobalConstants.UserRoleName);
                 }
             }
         }
