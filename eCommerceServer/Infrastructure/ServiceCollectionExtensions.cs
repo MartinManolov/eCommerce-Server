@@ -6,6 +6,7 @@
     using eCommerceServer.Features.Categories;
     using eCommerceServer.Features.Discounts;
     using eCommerceServer.Features.Identity;
+    using eCommerceServer.Features.ProductInventories;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
@@ -65,7 +66,8 @@
                 .AddScoped(typeof(IRepository<>), typeof(EfRepository<>))
                 .AddTransient<IIdentityService, IdentityService>()
                 .AddTransient<ICategoryService, CategoryService>()
-                .AddTransient<IDiscountService, DiscountService>();
+                .AddTransient<IDiscountService, DiscountService>()
+                .AddTransient<IProductInventoryService, ProductInventoryService>();
 
             return services;
         }
