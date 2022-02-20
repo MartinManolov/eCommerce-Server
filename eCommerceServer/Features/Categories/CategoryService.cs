@@ -26,7 +26,7 @@
             var isAdmin = await identityService.IsAdmin();
             if(!isAdmin)
             {
-                throw new Exception("UnauthorizedAccess: Only Admin");
+                throw new Exception("UnauthorizedAccess: Admin only");
             }
 
             var category = new Category { Name = model.Name };
@@ -42,7 +42,7 @@
             var isAdmin = await identityService.IsAdmin();
             if (!isAdmin)
             {
-                throw new Exception("UnauthorizedAccess: Only Admin");
+                throw new Exception("UnauthorizedAccess: Admin only");
             }
 
             var subCategory = new SubCategory { Name = model.Name, CategoryId = model.CategoryId };
