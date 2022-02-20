@@ -16,7 +16,7 @@
 
         public string Description { get; set; }
 
-        public int DiscountId { get; set; }
+        public int? DiscountId { get; set; }
 
         public virtual Discount Discount { get; set; }
 
@@ -28,7 +28,7 @@
 
         public virtual Category Category { get; set; }
 
-        public int SubCategoryId { get; set; }
+        public int? SubCategoryId { get; set; }
 
         public virtual SubCategory SubCategory { get; set; }
 

@@ -29,7 +29,6 @@
 
             var productInventory = new ProductInventory
             {
-                ProductId = model.ProductId,
                 Quantity = model.Quantity
             };
 

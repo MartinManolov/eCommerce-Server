@@ -7,6 +7,7 @@
     using eCommerceServer.Features.Discounts;
     using eCommerceServer.Features.Identity;
     using eCommerceServer.Features.ProductInventories;
+    using eCommerceServer.Features.Products;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
@@ -67,7 +68,8 @@
                 .AddTransient<IIdentityService, IdentityService>()
                 .AddTransient<ICategoryService, CategoryService>()
                 .AddTransient<IDiscountService, DiscountService>()
-                .AddTransient<IProductInventoryService, ProductInventoryService>();
+                .AddTransient<IProductInventoryService, ProductInventoryService>()
+                .AddTransient<IProductService, ProductService>();
 
             return services;
         }
