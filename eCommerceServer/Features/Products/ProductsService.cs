@@ -7,15 +7,15 @@
     using System;
     using System.Threading.Tasks;
 
-    public class ProductService : IProductService
+    public class ProductsService : IProductsService
     {
         private readonly IDeletableEntityRepository<Product> productRepository;
         private readonly IIdentityService identityService;
-        private readonly IProductInventoryService productInventoryService;
+        private readonly IProductsInventoryService productInventoryService;
 
-        public ProductService(IDeletableEntityRepository<Product> productRepository,
+        public ProductsService(IDeletableEntityRepository<Product> productRepository,
                               IIdentityService identityService,
-                              IProductInventoryService productInventoryService)
+                              IProductsInventoryService productInventoryService)
         {
             this.productRepository = productRepository;
             this.identityService = identityService;

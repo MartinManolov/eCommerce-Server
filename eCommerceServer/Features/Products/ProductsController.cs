@@ -4,11 +4,11 @@
     using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
 
-    public class ProductController: ApiController
+    public class ProductsController: ApiController
     {
-        private readonly IProductService productService;
+        private readonly IProductsService productService;
 
-        public ProductController(IProductService productService)
+        public ProductsController(IProductsService productService)
         {
             this.productService = productService;
         }

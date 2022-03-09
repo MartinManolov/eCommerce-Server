@@ -2,7 +2,7 @@
 
 namespace eCommerceServer.Features.Categories
 {
-    public interface ICategoryService
+    public interface ICategoriesService
     {
         Task<int> AddCategory(AddCategoryRequestModel model);
 

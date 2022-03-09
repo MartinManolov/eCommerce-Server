@@ -2,7 +2,7 @@
 {
     using System.Threading.Tasks;
 
-    public interface IProductService
+    public interface IProductsService
     {
         Task<int> AddProduct(AddProductRequestModel model);
     }

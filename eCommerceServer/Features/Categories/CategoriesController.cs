@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 
 namespace eCommerceServer.Features.Categories
 {
-    public class CategoryController : ApiController
+    public class CategoriesController : ApiController
     {
-        private readonly ICategoryService categoryService;
+        private readonly ICategoriesService categoryService;
 
-        public CategoryController(ICategoryService categoryService)
+        public CategoriesController(ICategoriesService categoryService)
         {
             this.categoryService = categoryService;
         }

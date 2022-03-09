@@ -6,13 +6,13 @@
     using System;
     using System.Threading.Tasks;
 
-    public class CategoryService : ICategoryService
+    public class CategoriesService : ICategoriesService
     {
         private readonly IDeletableEntityRepository<Category> categoryRepository;
         private readonly IDeletableEntityRepository<SubCategory> subCategoryRepository;
         private readonly IIdentityService identityService;
 
-        public CategoryService(IDeletableEntityRepository<Category> categoryRepository,
+        public CategoriesService(IDeletableEntityRepository<Category> categoryRepository,
                                IDeletableEntityRepository<SubCategory> subCategoryRepository,
                                IIdentityService identityService)
         {

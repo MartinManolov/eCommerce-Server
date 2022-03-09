@@ -3,6 +3,7 @@
     using eCommerceServer.Data;
     using eCommerceServer.Data.Models;
     using eCommerceServer.Data.Repositories;
+    using eCommerceServer.Features.Adresses;
     using eCommerceServer.Features.Categories;
     using eCommerceServer.Features.Discounts;
     using eCommerceServer.Features.Identity;
@@ -66,10 +67,11 @@
                 .AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>))
                 .AddScoped(typeof(IRepository<>), typeof(EfRepository<>))
                 .AddTransient<IIdentityService, IdentityService>()
-                .AddTransient<ICategoryService, CategoryService>()
-                .AddTransient<IDiscountService, DiscountService>()
-                .AddTransient<IProductInventoryService, ProductInventoryService>()
-                .AddTransient<IProductService, ProductService>();
+                .AddTransient<ICategoriesService, CategoriesService>()
+                .AddTransient<IDiscountsService, DiscountsService>()
+                .AddTransient<IProductsInventoryService, ProductsInventoryService>()
+                .AddTransient<IProductsService, ProductsService>()
+                .AddTransient<IAddressesService, AddressesService>();
 
             return services;
         }

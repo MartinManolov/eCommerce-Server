@@ -2,7 +2,7 @@
 {
     using System.Threading.Tasks;
 
-    public interface IDiscountService
+    public interface IDiscountsService
     {
         Task<int> AddDiscount(AddDiscountRequestModel model);
     }

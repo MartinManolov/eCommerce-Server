@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace eCommerceServer.Features.Discounts
 {
-    public class DiscountService : IDiscountService
+    public class DiscountsService : IDiscountsService
     {
         private readonly IDeletableEntityRepository<Discount> discountRepository;
         private readonly IIdentityService identityService;
 
-        public DiscountService(IDeletableEntityRepository<Discount> discountRepository,
+        public DiscountsService(IDeletableEntityRepository<Discount> discountRepository,
                                IIdentityService identityService)
         {
             this.discountRepository = discountRepository;

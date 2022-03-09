@@ -6,12 +6,12 @@
     using System;
     using System.Threading.Tasks;
 
-    public class ProductInventoryService : IProductInventoryService
+    public class ProductsInventoryService : IProductsInventoryService
     {
         private readonly IDeletableEntityRepository<ProductInventory> productInventoryRepository;
         private readonly IIdentityService identityService;
 
-        public ProductInventoryService(IDeletableEntityRepository<ProductInventory> productInventoryRepository,
+        public ProductsInventoryService(IDeletableEntityRepository<ProductInventory> productInventoryRepository,
                                        IIdentityService identityService)
         {
             this.productInventoryRepository = productInventoryRepository;

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace eCommerceServer.Features.Discounts
 {
-    public class DiscountController: ApiController
+    public class DiscountsController: ApiController
     {
-        private readonly IDiscountService discountService;
+        private readonly IDiscountsService discountService;
 
-        public DiscountController(IDiscountService discountService)
+        public DiscountsController(IDiscountsService discountService)
         {
             this.discountService = discountService;
         }

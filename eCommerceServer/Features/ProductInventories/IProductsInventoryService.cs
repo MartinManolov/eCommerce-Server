@@ -2,7 +2,7 @@
 {
     using System.Threading.Tasks;
 
-    public interface IProductInventoryService
+    public interface IProductsInventoryService
     {
         Task<int> AddProductInventory(AddProductInventoryRequestModel model);
     }
